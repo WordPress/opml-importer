@@ -25,7 +25,7 @@ if ( !class_exists( 'WP_Importer' ) ) {
 /** Load WordPress Administration Bootstrap */
 $parent_file = 'tools.php';
 $submenu_file = 'import.php';
-$title = __('Import Blogroll');
+$title = __('Import Blogroll', 'opml-importer');
 
 /**
  * OPML Importer
@@ -44,35 +44,35 @@ switch ($step) {
 	case 0: {
 		include_once( ABSPATH . 'wp-admin/admin-header.php' );
 		if ( !current_user_can('manage_links') )
-			wp_die(__('Cheatin&#8217; uh?'));
+			wp_die(__('Cheatin&#8217; uh?', 'opml-importer'));
 
 		$opmltype = 'blogrolling'; // default.
 ?>
 
 <div class="wrap">
 <?php screen_icon(); ?>
-<h2><?php _e('Import your blogroll from another system') ?> </h2>
+<h2><?php _e('Import your blogroll from another system', 'opml-importer') ?> </h2>
 <form enctype="multipart/form-data" action="admin.php?import=opml" method="post" name="blogroll">
 <?php wp_nonce_field('import-bookmarks') ?>
 
-<p><?php _e('If a program or website you use allows you to export your links or subscriptions as OPML you may import them here.'); ?></p>
+<p><?php _e('If a program or website you use allows you to export your links or subscriptions as OPML you may import them here.', 'opml-importer'); ?></p>
 <div style="width: 70%; margin: auto; height: 8em;">
 <input type="hidden" name="step" value="1" />
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo wp_max_upload_size(); ?>" />
 <div style="width: 48%;" class="alignleft">
-<h3><label for="opml_url"><?php _e('Specify an OPML URL:'); ?></label></h3>
+<h3><label for="opml_url"><?php _e('Specify an OPML URL:', 'opml-importer'); ?></label></h3>
 <input type="text" name="opml_url" id="opml_url" size="50" class="code" style="width: 90%;" value="http://" />
 </div>
 
 <div style="width: 48%;" class="alignleft">
-<h3><label for="userfile"><?php _e('Or choose from your local disk:'); ?></label></h3>
+<h3><label for="userfile"><?php _e('Or choose from your local disk:', 'opml-importer'); ?></label></h3>
 <input id="userfile" name="userfile" type="file" size="30" />
 </div>
 
 </div>
 
-<p style="clear: both; margin-top: 1em;"><label for="cat_id"><?php _e('Now select a category you want to put these links in.') ?></label><br />
-<?php _e('Category:') ?> <select name="cat_id" id="cat_id">
+<p style="clear: both; margin-top: 1em;"><label for="cat_id"><?php _e('Now select a category you want to put these links in.', 'opml-importer') ?></label><br />
+<?php _e('Category:', 'opml-importer') ?> <select name="cat_id" id="cat_id">
 <?php
 $categories = get_terms('link_category', array('get' => 'all'));
 foreach ($categories as $category) {
@@ -83,7 +83,7 @@ foreach ($categories as $category) {
 ?>
 </select></p>
 
-<p class="submit"><input type="submit" name="submit" value="<?php esc_attr_e('Import OPML File') ?>" /></p>
+<p class="submit"><input type="submit" name="submit" value="<?php esc_attr_e('Import OPML File', 'opml-importer') ?>" /></p>
 </form>
 
 </div>
@@ -96,11 +96,11 @@ foreach ($categories as $category) {
 
 		include_once( ABSPATH . 'wp-admin/admin-header.php' );
 		if ( !current_user_can('manage_links') )
-			wp_die(__('Cheatin&#8217; uh?'));
+			wp_die(__('Cheatin&#8217; uh?', 'opml-importer'));
 ?>
 <div class="wrap">
 
-<h2><?php _e('Importing...') ?></h2>
+<h2><?php _e('Importing...', 'opml-importer') ?></h2>
 <?php
 		$cat_id = abs( (int) $_POST['cat_id'] );
 		if ( $cat_id < 1 )
@@ -141,17 +141,17 @@ foreach ($categories as $category) {
 					$titles[$i] = '';
 				$link = array( 'link_url' => $urls[$i], 'link_name' => $wpdb->escape($names[$i]), 'link_category' => array($cat_id), 'link_description' => $wpdb->escape($descriptions[$i]), 'link_owner' => $user_ID, 'link_rss' => $feeds[$i]);
 				wp_insert_link($link);
-				echo sprintf('<p>'.__('Inserted <strong>%s</strong>').'</p>', $names[$i]);
+				echo sprintf('<p>'.__('Inserted <strong>%s</strong>', 'opml-importer').'</p>', $names[$i]);
 			}
 ?>
 
-<p><?php printf(__('Inserted %1$d links into category %2$s. All done! Go <a href="%3$s">manage those links</a>.'), $link_count, $cat_id, 'link-manager.php') ?></p>
+<p><?php printf(__('Inserted %1$d links into category %2$s. All done! Go <a href="%3$s">manage those links</a>.', 'opml-importer'), $link_count, $cat_id, 'link-manager.php') ?></p>
 
 <?php
 } // end if got url
 else
 {
-	echo "<p>" . __("You need to supply your OPML url. Press back on your browser and try again") . "</p>\n";
+	echo "<p>" . __("You need to supply your OPML url. Press back on your browser and try again", 'opml-importer') . "</p>\n";
 } // end else
 
 if ( ! $blogrolling )
@@ -170,6 +170,11 @@ if ( ! $blogrolling )
 
 $opml_importer = new OPML_Import();
 
-register_importer('opml', __('Blogroll'), __('Import links in OPML format.'), array(&$opml_importer, 'dispatch'));
+register_importer('opml', __('Blogroll', 'opml-importer'), __('Import links in OPML format.', 'opml-importer'), array(&$opml_importer, 'dispatch'));
 
 } // class_exists( 'WP_Importer' )
+
+function opml_importer_init() {
+    load_plugin_textdomain( 'opml-importer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'opml_importer_init' );
