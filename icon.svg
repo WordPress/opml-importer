@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256px" height="256px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>OPML Importer </title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="-2.48949813e-15%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#99D9ED" offset="0%"></stop>
+            <stop stop-color="#33B3DB" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FBFBFC" offset="0%"></stop>
+            <stop stop-color="#F3F4F5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M72.4713872,111 L92.0026372,111 C95.2497075,111 97.8620122,113.612305 97.8620122,116.859375 L97.8620122,157.875 L119.273145,157.875 C123.618848,157.875 125.7917,163.124023 122.715528,166.200195 L85.5817387,203.358398 C83.750684,205.189453 69.2243168,111 72.4713872,111 Z" id="path-3"></path>
+        <filter x="-2.9%" y="-1.6%" width="105.8%" height="103.2%" filterUnits="objectBoundingBox" id="filter-4">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.11372549   0 0 0 0 0.11372549   0 0 0 0 0.105882353  0 0 0 0.1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <path d="M52.734375,0 L72.265625,0 C75.5126953,0 78.125,2.61230469 78.125,5.859375 L78.125,46.875 L99.5361328,46.875 C103.881836,46.875 106.054687,52.1240234 102.978516,55.2001953 L65.8447266,92.3583984 C64.0136719,94.1894531 61.0107422,94.1894531 59.1796875,92.3583984 L21.9970703,55.2001953 C18.9208984,52.1240234 21.09375,46.875 25.4394531,46.875 L46.875,46.875 L46.875,5.859375 C46.875,2.61230469 49.4873047,0 52.734375,0 Z M125,91.796875 L125,119.140625 C125,122.387695 122.387695,125 119.140625,125 L5.859375,125 C2.61230469,125 0,122.387695 0,119.140625 L0,91.796875 C0,88.5498047 2.61230469,85.9375 5.859375,85.9375 L41.6748047,85.9375 L53.6376953,97.9003906 C58.5449219,102.807617 66.4550781,102.807617 71.3623047,97.9003906 L83.3251953,85.9375 L119.140625,85.9375 C122.387695,85.9375 125,88.5498047 125,91.796875 Z" id="path-5"></path>
+        <filter x="-26.4%" y="-26.4%" width="152.8%" height="152.8%" filterUnits="objectBoundingBox" id="filter-6">
+            <feMorphology radius="1" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="10" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0.403921569   0 0 0 0 0.6  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="OPML-Importer-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill="#C3E6FC" x="0" y="0" width="256" height="256"></rect>
+        <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="256" height="256"></rect>
+        <g id="Opml-icon" transform="translate(76.000000, 20.000000)">
+            <rect id="Rectangle-3" fill="#282F35" x="0" y="0" width="160" height="160" rx="26"></rect>
+            <circle id="Oval" fill="#FFFFFF" fill-rule="nonzero" cx="80" cy="80" r="14.375"></circle>
+            <path d="M80,21.875 C47.8984489,21.875 21.875,47.8984489 21.875,80 C21.875,112.101551 47.8984489,138.125 80,138.125 C112.101551,138.125 138.125,112.101551 138.125,80 C138.125,64.5842915 132.001134,49.7999703 121.100582,38.8994183 C110.20003,27.9988663 95.4157085,21.875 80,21.875 Z M80,120.625 C57.563432,120.625 39.375,102.436568 39.375,80 C39.375,57.563432 57.563432,39.375 80,39.375 C102.436568,39.375 120.625,57.563432 120.625,80 C120.625,90.7744199 116.344878,101.107548 108.726213,108.726213 C101.107548,116.344878 90.7744199,120.625 80,120.625 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+        </g>
+        <g id="Path">
+            <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+            <use fill="url(#linearGradient-2)" fill-rule="evenodd" xlink:href="#path-3"></use>
+        </g>
+        <g id="download" transform="translate(20.000000, 111.000000)" fill-rule="nonzero">
+            <g>
+                <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                <use fill="url(#linearGradient-2)" fill-rule="evenodd" xlink:href="#path-5"></use>
+            </g>
+        </g>
+    </g>
+</svg>
