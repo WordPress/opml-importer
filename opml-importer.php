@@ -164,8 +164,6 @@ if ( ! $blogrolling )
 	} // end case 1
 } // end switch
 	}
-
-	function OPML_Import() {}
 }
 
 $opml_importer = new OPML_Import();
