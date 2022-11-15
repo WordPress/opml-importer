@@ -73,15 +73,20 @@ switch ($step) {
 
 </div>
 
+<?php
+$categories = get_terms('link_category', array('get' => 'all'));
+
+if ( count($categories) ) {
+?>
 <p style="clear: both; margin-top: 1em;"><label for="cat_id"><?php _e('Now select a category you want to put these links in.', 'opml-importer') ?></label><br />
 <?php _e('Category:', 'opml-importer') ?> <select name="cat_id" id="cat_id">
 <?php
-$categories = get_terms('link_category', array('get' => 'all'));
 foreach ($categories as $category) {
 ?>
 <option value="<?php echo $category->term_id; ?>"><?php echo esc_html(apply_filters('link_category', $category->name)); ?></option>
 <?php
 } // end foreach
+} // end if
 ?>
 </select></p>
 
@@ -104,9 +109,13 @@ foreach ($categories as $category) {
 
 <h2><?php _e('Importing...', 'opml-importer') ?></h2>
 <?php
-		$cat_id = abs( (int) $_POST['cat_id'] );
-		if ( $cat_id < 1 )
-			$cat_id  = 1;
+		$cat_id = null;
+		if( array_key_exists( 'cat_id', $_POST ) ) {
+			$cat_id = abs( (int) $_POST['cat_id'] );
+
+			if ( $cat_id < 1 )
+				$cat_id  = 1;
+		}
 
 		$opml_url = $_POST['opml_url'];
 		if ( isset($opml_url) && $opml_url != '' && $opml_url != 'http://' ) {
@@ -141,14 +150,21 @@ foreach ($categories as $category) {
 					$titles[$i] = '';
 				if ( 'http' == substr($titles[$i], 0, 4) )
 					$titles[$i] = '';
-				$link = array( 'link_url' => $urls[$i], 'link_name' => $wpdb->escape($names[$i]), 'link_category' => array($cat_id), 'link_description' => $wpdb->escape($descriptions[$i]), 'link_owner' => $user_ID, 'link_rss' => $feeds[$i]);
+				$link = array( 'link_url' => $urls[$i], 'link_name' => $wpdb->escape($names[$i]), 'link_category' => is_null($cat_id) ? null : array($cat_id), 'link_description' => $wpdb->escape($descriptions[$i]), 'link_owner' => $user_ID, 'link_rss' => $feeds[$i]);
 				wp_insert_link($link);
 				echo sprintf('<p>'.__('Inserted <strong>%s</strong>', 'opml-importer').'</p>', $names[$i]);
 			}
 ?>
 
-<p><?php printf(__('Inserted %1$d links into category %2$s. All done! Go <a href="%3$s">manage those links</a>.', 'opml-importer'), $link_count, $cat_id, 'link-manager.php') ?></p>
-
+<p>
+<?php
+	if ( is_null($cat_id) ) {
+		printf(__('Inserted %1$d links. All done! Go <a href="%2$s">manage those links</a>.', 'opml-importer'), $link_count, 'link-manager.php');
+	} else {
+		printf(__('Inserted %1$d links into category %2$s. All done! Go <a href="%3$s">manage those links</a>.', 'opml-importer'), $link_count, $cat_id, 'link-manager.php');
+	}
+?>
+</p>
 <?php
 } // end if got url
 else
