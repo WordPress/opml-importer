@@ -10,6 +10,9 @@ Stable tag: 0.2
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+// If a user want to import links we must enable the link manager
+add_filter( 'pre_option_link_manager_enabled', '__return_true' );
+
 if ( !defined('WP_LOAD_IMPORTERS') )
 	return;
 
