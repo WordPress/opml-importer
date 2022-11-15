@@ -150,7 +150,7 @@ foreach ($categories as $category) {
 					$titles[$i] = '';
 				if ( 'http' == substr($titles[$i], 0, 4) )
 					$titles[$i] = '';
-				$link = array( 'link_url' => $urls[$i], 'link_name' => $wpdb->escape($names[$i]), 'link_category' => is_null($cat_id) ? null : array($cat_id), 'link_description' => $wpdb->escape($descriptions[$i]), 'link_owner' => $user_ID, 'link_rss' => $feeds[$i]);
+				$link = array( 'link_url' => $urls[$i], 'link_name' => esc_sql($names[$i]), 'link_category' => is_null($cat_id) ? null : array($cat_id), 'link_description' => esc_sql($descriptions[$i]), 'link_owner' => $user_ID, 'link_rss' => $feeds[$i]);
 				wp_insert_link($link);
 				echo sprintf('<p>'.__('Inserted <strong>%s</strong>', 'opml-importer').'</p>', $names[$i]);
 			}
