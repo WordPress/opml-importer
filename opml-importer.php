@@ -144,24 +144,23 @@ foreach ($categories as $category) {
 			/** Load OPML Parser */
 			include_once( ABSPATH . 'wp-admin/link-parse-opml.php' );
 
-			$link_count = count($names);
+			$link_count    = count($names);
+			$link_inserted = 0;
 			for ( $i = 0; $i < $link_count; $i++ ) {
-				if ('Last' == substr($titles[$i], 0, 4))
-					$titles[$i] = '';
-				if ( 'http' == substr($titles[$i], 0, 4) )
-					$titles[$i] = '';
 				$link = array( 'link_url' => $urls[$i], 'link_name' => esc_sql($names[$i]), 'link_category' => is_null($cat_id) ? null : array($cat_id), 'link_description' => esc_sql($descriptions[$i]), 'link_owner' => $user_ID, 'link_rss' => $feeds[$i]);
-				wp_insert_link($link);
-				echo sprintf('<p>'.__('Inserted <strong>%s</strong>', 'opml-importer').'</p>', $names[$i]);
+				if ( wp_insert_link($link) !== 0 ) {
+					++$link_inserted;
+					echo sprintf('<p>'.__('Inserted <strong>%s</strong>', 'opml-importer').'</p>', $names[$i]);
+				}
 			}
 ?>
 
 <p>
 <?php
 	if ( is_null($cat_id) ) {
-		printf(__('Inserted %1$d links. All done! Go <a href="%2$s">manage those links</a>.', 'opml-importer'), $link_count, 'link-manager.php');
+		printf(__('Inserted %1$d links. All done! Go <a href="%2$s">manage those links</a>.', 'opml-importer'), $link_inserted, 'link-manager.php');
 	} else {
-		printf(__('Inserted %1$d links into category %2$s. All done! Go <a href="%3$s">manage those links</a>.', 'opml-importer'), $link_count, $cat_id, 'link-manager.php');
+		printf(__('Inserted %1$d links into category %2$s. All done! Go <a href="%3$s">manage those links</a>.', 'opml-importer'), $link_inserted, $cat_id, 'link-manager.php');
 	}
 ?>
 </p>
