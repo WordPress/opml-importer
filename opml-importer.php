@@ -53,6 +53,11 @@ switch ($step) {
 ?>
 
 <div class="wrap">
+<?php
+	if ( version_compare(get_bloginfo('version'), '3.8.0', '<') ) {
+		screen_icon();
+	}
+?>
 <h2><?php _e('Import your blogroll from another system', 'opml-importer') ?> </h2>
 <form enctype="multipart/form-data" action="admin.php?import=opml" method="post" name="blogroll">
 <?php wp_nonce_field('import-bookmarks') ?>
