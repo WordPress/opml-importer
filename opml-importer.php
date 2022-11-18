@@ -114,13 +114,9 @@ if ( is_wp_error( $categories ) ) { ?>
 
 <h2><?php _e('Importing...', 'opml-importer') ?></h2>
 <?php
-		$cat_id = null;
-		if( isset( $_POST['cat_id'] ) ) {
-			$cat_id = abs( (int) $_POST['cat_id'] );
-
-			if ( $cat_id < 1 ) {
-				$cat_id = 1;
-			}
+		$cat_id = isset( $_POST['cat_id'] ) ? abs( (int) $_POST['cat_id'] ) : 1;
+		if ( $cat_id < 1 ) {
+			$cat_id = 1;
 		}
 
 		$opml_url = $_POST['opml_url'];
@@ -156,7 +152,7 @@ if ( is_wp_error( $categories ) ) { ?>
 				$link = array(
 					'link_url'         => $urls[$i],
 					'link_name'        => $names[$i],
-					'link_category'    => is_null( $cat_id ) ? null : array($cat_id),
+					'link_category'    => array( $cat_id ),
 					'link_description' => $descriptions[$i],
 					'link_owner'       => $user_ID,
 					'link_rss'         => $feeds[$i],
