@@ -54,9 +54,9 @@ switch ($step) {
 
 <div class="wrap">
 <?php
-	if ( version_compare(get_bloginfo('version'), '3.8.0', '<') ) {
-		screen_icon();
-	}
+if ( version_compare(get_bloginfo('version'), '3.8.0', '<') ) {
+	screen_icon();
+}
 ?>
 <h2><?php _e('Import your blogroll from another system', 'opml-importer') ?> </h2>
 <form enctype="multipart/form-data" action="admin.php?import=opml" method="post" name="blogroll">
@@ -81,16 +81,16 @@ switch ($step) {
 <?php
 $categories = get_terms('link_category', array('get' => 'all'));
 
-if ( count($categories) ) {
+if ( is_wp_error( $categories ) ) { ?>
+	<p><?php echo $categories->get_error_message(); ?></p>
+<?php } else if ( is_array( $categories ) && ! empty( $categories ) ) {
 ?>
 <p style="clear: both; margin-top: 1em;"><label for="cat_id"><?php _e('Now select a category you want to put these links in.', 'opml-importer') ?></label><br />
 <?php _e('Category:', 'opml-importer') ?> <select name="cat_id" id="cat_id">
-<?php
-foreach ($categories as $category) {
-?>
+<?php foreach ($categories as $category) { ?>
 <option value="<?php echo $category->term_id; ?>"><?php echo esc_html(apply_filters('link_category', $category->name)); ?></option>
 <?php
-} // end foreach
+	} // end foreach
 } // end if
 ?>
 </select></p>
@@ -115,11 +115,12 @@ foreach ($categories as $category) {
 <h2><?php _e('Importing...', 'opml-importer') ?></h2>
 <?php
 		$cat_id = null;
-		if( array_key_exists( 'cat_id', $_POST ) ) {
+		if( isset( $_POST['cat_id'] ) ) {
 			$cat_id = abs( (int) $_POST['cat_id'] );
 
-			if ( $cat_id < 1 )
-				$cat_id  = 1;
+			if ( $cat_id < 1 ) {
+				$cat_id = 1;
+			}
 		}
 
 		$opml_url = $_POST['opml_url'];
@@ -152,8 +153,15 @@ foreach ($categories as $category) {
 			$link_count    = count($names);
 			$link_inserted = 0;
 			for ( $i = 0; $i < $link_count; $i++ ) {
-				$link = array( 'link_url' => $urls[$i], 'link_name' => esc_sql($names[$i]), 'link_category' => is_null($cat_id) ? null : array($cat_id), 'link_description' => esc_sql($descriptions[$i]), 'link_owner' => $user_ID, 'link_rss' => $feeds[$i]);
-				if ( wp_insert_link($link) !== 0 ) {
+				$link = array(
+					'link_url'         => $urls[$i],
+					'link_name'        => $names[$i],
+					'link_category'    => is_null( $cat_id ) ? null : array($cat_id),
+					'link_description' => $descriptions[$i],
+					'link_owner'       => $user_ID,
+					'link_rss'         => $feeds[$i],
+				);
+				if ( wp_insert_link( $link ) !== 0 ) {
 					++$link_inserted;
 					echo sprintf('<p>'.__('Inserted <strong>%s</strong>', 'opml-importer').'</p>', $names[$i]);
 				}
