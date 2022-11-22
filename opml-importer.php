@@ -10,9 +10,6 @@ Stable tag: 0.2
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-// If a user want to import links we must enable the link manager
-add_filter( 'pre_option_link_manager_enabled', '__return_true' );
-
 if ( !defined('WP_LOAD_IMPORTERS') )
 	return;
 
@@ -41,7 +38,8 @@ class OPML_Import extends WP_Importer {
 
 	function dispatch() {
 		global $wpdb, $user_ID;
-$step = isset( $_POST['step'] ) ? $_POST['step'] : 0;
+		$step = isset( $_POST['step'] ) ? $_POST['step'] : 0;
+		$this->check_link_manager();
 
 switch ($step) {
 	case 0: {
@@ -189,6 +187,55 @@ if ( ! $blogrolling )
 		break;
 	} // end case 1
 } // end switch
+	}
+
+	// Check if the Link Manager is enabled
+	function check_link_manager() {
+		// The Link Manager has been disabled in WordPress >= 3.5.0, no need to do additional checks
+		if ( version_compare(get_bloginfo('version'), '3.5.0', '<') ) {
+			return;
+		}
+
+		add_filter( 'pre_option_link_manager_enabled', '__return_true', 100 );
+		$really_can_manage_links = current_user_can( 'manage_links' );
+		remove_filter( 'pre_option_link_manager_enabled', '__return_true', 100 );
+
+		if ( $really_can_manage_links ) {
+			$plugins = get_plugins();
+
+			// Check if the user has Link Manager plugin
+			if ( empty( $plugins['link-manager/link-manager.php'] ) ) {
+				if ( current_user_can( 'install_plugins' ) ) {
+					$install_url = wp_nonce_url(
+						self_admin_url( 'update.php?action=install-plugin&plugin=link-manager' ),
+						'install-plugin_link-manager'
+					);
+
+					wp_die(
+						sprintf(
+							/* translators: %s: A link to install the Link Manager plugin. */
+							__( 'If you are looking to use the OPML importer, please install the <a href="%s">Link Manager plugin</a>.' ),
+							esc_url( $install_url )
+						)
+					);
+				}
+			} elseif ( is_plugin_inactive( 'link-manager/link-manager.php' ) ) {
+				if ( current_user_can( 'activate_plugins' ) ) {
+					$activate_url = wp_nonce_url(
+						self_admin_url( 'plugins.php?action=activate&plugin=link-manager/link-manager.php' ),
+						'activate-plugin_link-manager/link-manager.php'
+					);
+
+					wp_die(
+						sprintf(
+							/* translators: %s: A link to activate the Link Manager plugin. */
+							__( 'Please activate the <a href="%s">Link Manager plugin</a> to use the OPML importer.' ),
+							esc_url( $activate_url )
+						)
+					);
+				}
+			}
+		}
 	}
 }
 
