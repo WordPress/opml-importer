@@ -52,7 +52,7 @@ switch ($step) {
 
 <div class="wrap">
 <?php
-if ( version_compare(get_bloginfo('version'), '3.8.0', '<') ) {
+if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
 	screen_icon();
 }
 ?>
@@ -192,7 +192,7 @@ if ( ! $blogrolling )
 	// Check if the Link Manager is enabled
 	function check_link_manager() {
 		// The Link Manager has been disabled in WordPress >= 3.5.0, no need to do additional checks
-		if ( version_compare(get_bloginfo('version'), '3.5.0', '<') ) {
+		if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
 			return;
 		}
 
