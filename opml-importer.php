@@ -5,8 +5,8 @@ Plugin URI: http://wordpress.org/extend/plugins/opml-importer/
 Description: Import links in OPML format.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.2
-Stable tag: 0.2
+Version: 0.3
+Stable tag: 0.3
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -38,7 +38,8 @@ class OPML_Import extends WP_Importer {
 
 	function dispatch() {
 		global $wpdb, $user_ID;
-$step = isset( $_POST['step'] ) ? $_POST['step'] : 0;
+		$step = isset( $_POST['step'] ) ? $_POST['step'] : 0;
+		$this->check_link_manager();
 
 switch ($step) {
 	case 0: {
@@ -50,7 +51,11 @@ switch ($step) {
 ?>
 
 <div class="wrap">
-<?php screen_icon(); ?>
+<?php
+if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
+	screen_icon();
+}
+?>
 <h2><?php _e('Import your blogroll from another system', 'opml-importer') ?> </h2>
 <form enctype="multipart/form-data" action="admin.php?import=opml" method="post" name="blogroll">
 <?php wp_nonce_field('import-bookmarks') ?>
@@ -71,15 +76,20 @@ switch ($step) {
 
 </div>
 
-<p style="clear: both; margin-top: 1em;"><label for="cat_id"><?php _e('Now select a category you want to put these links in.', 'opml-importer') ?></label><br />
-<?php _e('Category:', 'opml-importer') ?> <select name="cat_id" id="cat_id">
 <?php
 $categories = get_terms('link_category', array('get' => 'all'));
-foreach ($categories as $category) {
+
+if ( is_wp_error( $categories ) ) { ?>
+	<p><?php echo $categories->get_error_message(); ?></p>
+<?php } else if ( is_array( $categories ) && ! empty( $categories ) ) {
 ?>
+<p style="clear: both; margin-top: 1em;"><label for="cat_id"><?php _e('Now select a category you want to put these links in.', 'opml-importer') ?></label><br />
+<?php _e('Category:', 'opml-importer') ?> <select name="cat_id" id="cat_id">
+<?php foreach ($categories as $category) { ?>
 <option value="<?php echo $category->term_id; ?>"><?php echo esc_html(apply_filters('link_category', $category->name)); ?></option>
 <?php
-} // end foreach
+	} // end foreach
+} // end if
 ?>
 </select></p>
 
@@ -102,9 +112,10 @@ foreach ($categories as $category) {
 
 <h2><?php _e('Importing...', 'opml-importer') ?></h2>
 <?php
-		$cat_id = abs( (int) $_POST['cat_id'] );
-		if ( $cat_id < 1 )
-			$cat_id  = 1;
+		$cat_id = isset( $_POST['cat_id'] ) ? abs( (int) $_POST['cat_id'] ) : 1;
+		if ( $cat_id < 1 ) {
+			$cat_id = 1;
+		}
 
 		$opml_url = $_POST['opml_url'];
 		if ( isset($opml_url) && $opml_url != '' && $opml_url != 'http://' ) {
@@ -133,20 +144,33 @@ foreach ($categories as $category) {
 			/** Load OPML Parser */
 			include_once( ABSPATH . 'wp-admin/link-parse-opml.php' );
 
-			$link_count = count($names);
+			$link_count    = count($names);
+			$link_inserted = 0;
 			for ( $i = 0; $i < $link_count; $i++ ) {
-				if ('Last' == substr($titles[$i], 0, 4))
-					$titles[$i] = '';
-				if ( 'http' == substr($titles[$i], 0, 4) )
-					$titles[$i] = '';
-				$link = array( 'link_url' => $urls[$i], 'link_name' => $wpdb->escape($names[$i]), 'link_category' => array($cat_id), 'link_description' => $wpdb->escape($descriptions[$i]), 'link_owner' => $user_ID, 'link_rss' => $feeds[$i]);
-				wp_insert_link($link);
-				echo sprintf('<p>'.__('Inserted <strong>%s</strong>', 'opml-importer').'</p>', $names[$i]);
+				$link = array(
+					'link_url'         => $urls[$i],
+					'link_name'        => $names[$i],
+					'link_category'    => array( $cat_id ),
+					'link_description' => $descriptions[$i],
+					'link_owner'       => $user_ID,
+					'link_rss'         => $feeds[$i],
+				);
+				if ( wp_insert_link( $link ) !== 0 ) {
+					++$link_inserted;
+					echo sprintf('<p>'.__('Inserted <strong>%s</strong>', 'opml-importer').'</p>', $names[$i]);
+				}
 			}
 ?>
 
-<p><?php printf(__('Inserted %1$d links into category %2$s. All done! Go <a href="%3$s">manage those links</a>.', 'opml-importer'), $link_count, $cat_id, 'link-manager.php') ?></p>
-
+<p>
+<?php
+	if ( is_null($cat_id) ) {
+		printf(__('Inserted %1$d links. All done! Go <a href="%2$s">manage those links</a>.', 'opml-importer'), $link_inserted, 'link-manager.php');
+	} else {
+		printf(__('Inserted %1$d links into category %2$s. All done! Go <a href="%3$s">manage those links</a>.', 'opml-importer'), $link_inserted, $cat_id, 'link-manager.php');
+	}
+?>
+</p>
 <?php
 } // end if got url
 else
@@ -163,6 +187,55 @@ if ( ! $blogrolling )
 		break;
 	} // end case 1
 } // end switch
+	}
+
+	// Check if the Link Manager is enabled
+	function check_link_manager() {
+		// The Link Manager has been disabled in WordPress >= 3.5.0, no need to do additional checks
+		if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
+			return;
+		}
+
+		add_filter( 'pre_option_link_manager_enabled', '__return_true', 100 );
+		$really_can_manage_links = current_user_can( 'manage_links' );
+		remove_filter( 'pre_option_link_manager_enabled', '__return_true', 100 );
+
+		if ( $really_can_manage_links ) {
+			$plugins = get_plugins();
+
+			// Check if the user has Link Manager plugin
+			if ( empty( $plugins['link-manager/link-manager.php'] ) ) {
+				if ( current_user_can( 'install_plugins' ) ) {
+					$install_url = wp_nonce_url(
+						self_admin_url( 'update.php?action=install-plugin&plugin=link-manager' ),
+						'install-plugin_link-manager'
+					);
+
+					wp_die(
+						sprintf(
+							/* translators: %s: A link to install the Link Manager plugin. */
+							__( 'If you are looking to use the OPML importer, please install the <a href="%s">Link Manager plugin</a>.' ),
+							esc_url( $install_url )
+						)
+					);
+				}
+			} elseif ( is_plugin_inactive( 'link-manager/link-manager.php' ) ) {
+				if ( current_user_can( 'activate_plugins' ) ) {
+					$activate_url = wp_nonce_url(
+						self_admin_url( 'plugins.php?action=activate&plugin=link-manager/link-manager.php' ),
+						'activate-plugin_link-manager/link-manager.php'
+					);
+
+					wp_die(
+						sprintf(
+							/* translators: %s: A link to activate the Link Manager plugin. */
+							__( 'Please activate the <a href="%s">Link Manager plugin</a> to use the OPML importer.' ),
+							esc_url( $activate_url )
+						)
+					);
+				}
+			}
+		}
 	}
 }
 
