@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: WordPress.org plugin asset/readme update
-      uses: 10up/action-wordpress-plugin-asset-update@stable
+      uses: zaerl/action-wordpress-plugin-asset-update@svn-update
       env:
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}

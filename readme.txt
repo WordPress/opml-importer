@@ -1,6 +1,5 @@
 === Plugin Name ===
 Contributors: wordpressdotorg
-Donate link:
 Tags: importer, opml
 Requires at least: 3.0
 Tested up to: 6.1
