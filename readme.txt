@@ -27,6 +27,7 @@ Import links in OPML format.
 
 = 0.3 =
 * Add support for WordPress 6.1
+* Enable Link Manager if deactivated
 
 = 0.2 =
 * Add l18n
