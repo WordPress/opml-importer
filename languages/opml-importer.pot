@@ -1,102 +1,101 @@
-# Translation of the WordPress plugin OPML Importer 0.2 by wordpressdotorg.
-# Copyright (C) 2010 wordpressdotorg
+# Translation of the WordPress plugin OPML Importer 0.3.1 by wordpressdotorg.
+# Copyright (C) 2010-2022 wordpressdotorg
 # This file is distributed under the same license as the OPML Importer package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: OPML Importer 0.2\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/opml-importer\n"
-"POT-Creation-Date: 2010-06-01 13:26+0300\n"
-"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: OPML Importer 0.3.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/opml-importer\n"
+"POT-Creation-Date: 2022-12-06T11:35:20+00:00\n"
+"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: opml-importer\n"
+
+#. Plugin Name of the plugin
+msgid "OPML Importer"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "http://wordpress.org/extend/plugins/opml-importer/"
+msgstr ""
+
+#. Description of the plugin
+#: opml-importer.php:244
+msgid "Import links in OPML format."
+msgstr ""
+
+#. Author of the plugin
+msgid "wordpressdotorg"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://wordpress.org/"
+msgstr ""
 
 #: opml-importer.php:28
 msgid "Import Blogroll"
 msgstr ""
 
-#: opml-importer.php:47 opml-importer.php:99
+#: opml-importer.php:48
+#: opml-importer.php:109
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
-#: opml-importer.php:54
+#: opml-importer.php:59
 msgid "Import your blogroll from another system"
 msgstr ""
 
-#: opml-importer.php:58
-msgid ""
-"If a program or website you use allows you to export your links or "
-"subscriptions as OPML you may import them here."
-msgstr ""
-
 #: opml-importer.php:63
-msgid "Specify an OPML URL:"
+msgid "If a program or website you use allows you to export your links or subscriptions as OPML you may import them here."
 msgstr ""
 
 #: opml-importer.php:68
+msgid "Specify an OPML URL:"
+msgstr ""
+
+#: opml-importer.php:73
 msgid "Or choose from your local disk:"
 msgstr ""
 
-#: opml-importer.php:74
+#: opml-importer.php:86
 msgid "Now select a category you want to put these links in."
 msgstr ""
 
-#: opml-importer.php:75
+#: opml-importer.php:87
 msgid "Category:"
 msgstr ""
 
-#: opml-importer.php:86
+#: opml-importer.php:96
 msgid "Import OPML File"
 msgstr ""
 
-#: opml-importer.php:103
+#: opml-importer.php:113
 msgid "Importing..."
 msgstr ""
 
-#: opml-importer.php:144
-#, php-format
+#: opml-importer.php:160
 msgid "Inserted <strong>%s</strong>"
 msgstr ""
 
-#: opml-importer.php:148
-#, php-format
-msgid ""
-"Inserted %1$d links into category %2$s. All done! Go <a href=\"%3$s\">manage "
-"those links</a>."
+#: opml-importer.php:168
+msgid "Inserted %1$d links. All done! Go <a href=\"%2$s\">manage those links</a>."
 msgstr ""
 
-#: opml-importer.php:154
-msgid ""
-"You need to supply your OPML url. Press back on your browser and try again"
+#: opml-importer.php:170
+msgid "Inserted %1$d links into category %2$s. All done! Go <a href=\"%3$s\">manage those links</a>."
 msgstr ""
 
-#: opml-importer.php:173
+#: opml-importer.php:178
+msgid "You need to supply your OPML url. Press back on your browser and try again"
+msgstr ""
+
+#: opml-importer.php:244
 msgid "Blogroll"
-msgstr ""
-
-#. #-#-#-#-#  opml-importer.pot (OPML Importer 0.2)  #-#-#-#-#
-#. Description of the plugin/theme
-#: opml-importer.php:173
-msgid "Import links in OPML format."
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "OPML Importer"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-msgid "http://wordpress.org/extend/plugins/opml-importer/"
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "wordpressdotorg"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://wordpress.org/"
 msgstr ""
