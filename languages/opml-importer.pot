@@ -1,20 +1,20 @@
-# Translation of the WordPress plugin OPML Importer 0.3.1 by wordpressdotorg.
-# Copyright (C) 2010-2022 wordpressdotorg
+# Translation of the WordPress plugin OPML Importer 0.3.2 by wordpressdotorg.
+# Copyright (C) 2010-2023 wordpressdotorg
 # This file is distributed under the same license as the OPML Importer package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: OPML Importer 0.3.1\n"
+"Project-Id-Version: OPML Importer 0.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/opml-importer\n"
-"POT-Creation-Date: 2022-12-06T11:35:20+00:00\n"
-"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-04-07T11:23:13+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: opml-importer\n"
 
