@@ -23,7 +23,7 @@ msgid "OPML Importer"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "http://wordpress.org/extend/plugins/opml-importer/"
+msgid "https://wordpress.org/extend/plugins/opml-importer/"
 msgstr ""
 
 #. Description of the plugin
@@ -36,7 +36,7 @@ msgid "wordpressdotorg"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "http://wordpress.org/"
+msgid "https://wordpress.org/"
 msgstr ""
 
 #: opml-importer.php:28
