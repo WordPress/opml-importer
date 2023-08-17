@@ -3,7 +3,7 @@ Contributors: wordpressdotorg
 Tags: importer, opml
 Requires at least: 3.0
 Tested up to: 6.3
-Stable tag: 0.3.3
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,9 +24,6 @@ Import links in OPML format.
 == Screenshots ==
 
 == Changelog ==
-
-= 0.3.3 =
-* Testing the plugin up to WordPress 6.3
 
 = 0.3.2 =
 * Testing the plugin up to WordPress 6.2
