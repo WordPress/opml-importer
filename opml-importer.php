@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: OPML Importer
-Plugin URI: https://wordpress.org/extend/plugins/opml-importer/
+Plugin URI: https://wordpress.org/plugins/opml-importer/
 Description: Import links in OPML format.
 Author: wordpressdotorg
 Author URI: https://wordpress.org/
