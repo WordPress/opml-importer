@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: OPML Importer
-Plugin URI: http://wordpress.org/extend/plugins/opml-importer/
+Plugin URI: https://wordpress.org/plugins/opml-importer/
 Description: Import links in OPML format.
 Author: wordpressdotorg
-Author URI: http://wordpress.org/
+Author URI: https://wordpress.org/
 Version: 0.3.2
 Stable tag: 0.3.2
-License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+License: GPL version 2 or later - https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
@@ -66,7 +66,7 @@ if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo wp_max_upload_size(); ?>" />
 <div style="width: 48%;" class="alignleft">
 <h3><label for="opml_url"><?php _e('Specify an OPML URL:', 'opml-importer'); ?></label></h3>
-<input type="text" name="opml_url" id="opml_url" size="50" class="code" style="width: 90%;" value="http://" />
+<input type="text" name="opml_url" id="opml_url" size="50" class="code" style="width: 90%;" value="https://" />
 </div>
 
 <div style="width: 48%;" class="alignleft">
@@ -118,7 +118,7 @@ if ( is_wp_error( $categories ) ) { ?>
 		}
 
 		$opml_url = $_POST['opml_url'];
-		if ( isset($opml_url) && $opml_url != '' && $opml_url != 'http://' ) {
+		if ( isset($opml_url) && $opml_url != '' && $opml_url != 'https://' ) {
 			$blogrolling = true;
 		} else { // try to get the upload file.
 			$overrides = array('test_form' => false, 'test_type' => false);
